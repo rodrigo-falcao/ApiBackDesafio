@@ -50,7 +50,7 @@ return tratarErrosEsperados(res, error);
 });
 
 
-router.get('/obter/usuario', conectarBancoDados, async function (req, res) {
+router.get('/obter/livro', conectarBancoDados, async function (req, res) {
 try {
 // #swagger.tags = ['Livros']
 // #swagger.description = "Endpoint para obter todas tarefas do usuario logado."
