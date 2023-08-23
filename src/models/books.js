@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const esquema = new mongoose.Schema(
+const scheme = new mongoose.Schema(
     {
         Titulo: {
         type: Number,
@@ -24,5 +24,5 @@ const esquema = new mongoose.Schema(
     }
 );
 
-const EsquemaTarefa = mongoose.models.books || mongoose.model('books', esquema);
-module.exports = EsquemaTarefa;
+const schemeBook = mongoose.models.books || mongoose.model('books', scheme);
+module.exports = schemeBook;
