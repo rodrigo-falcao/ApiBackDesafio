@@ -2,29 +2,20 @@ const mongoose = require('mongoose');
 
 const esquema = new mongoose.Schema(
     {
-        posicao: {
+        Titulo: {
         type: Number,
         required: 'é obrigatório!',
         },
-        titulo: {
+        Paginas: {
         type: String,
         required: 'é obrigatório!',
         },
-        descricao: {
+        ISBN: {
         type: String,
         default: '',
         },
-        status: {
+        Editora: {
         type: String,
-        required: 'é obrigatório!',
-        },
-        dataEntrega: {
-        type: Date,
-        default: null,
-        },
-        usuarioCriador: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Usuario',
         required: 'é obrigatório!',
         },
     },
@@ -33,5 +24,5 @@ const esquema = new mongoose.Schema(
     }
 );
 
-const EsquemaTarefa = mongoose.models.Tarefa || mongoose.model('Tarefa', esquema);
+const EsquemaTarefa = mongoose.models.books || mongoose.model('books', esquema);
 module.exports = EsquemaTarefa;

@@ -1,14 +1,12 @@
 const express = require('express');
 const tratarErrosEsperados = require('../functions/tratarErrosEsperados');
-const authUser = require('../middlewares/authUser');
 const conectarBancoDados = require('../middlewares/conectarBD');
-const EsquemaTarefa = require('../models/tarefa');
+const EsquemaTarefa = require('../models/books.js');
 const router = express.Router();
 
-
-router.post('/criar', authUser, conectarBancoDados, async function (req, res) {
+router.post('/criar', conectarBancoDados, async function (req, res) {
 try {
-// #swagger.tags = ['Tarefa']
+// #swagger.tags = ['Livro']
 // #swagger.description = "Criar um novo arquivo de livros conforme solicitado no Desafio."
 let { posicao, titulo, descricao, status, dataEntrega } = req.body;
 const usuarioCriador = req.usuarioJwt.id;
@@ -16,7 +14,7 @@ const respostaBD = await EsquemaTarefa.create({ posicao, titulo, descricao, stat
 
 res.status(200).json({
     status: "OK",
-    statusMensagem: "Tarefa criada com sucesso.",
+    statusMensagem: "Livro criada com sucesso.",
     resposta: respostaBD
 })
 
@@ -25,10 +23,9 @@ return tratarErrosEsperados(res, error);
 }
 });
 
-
-router.put('/editar/:id', authUser, conectarBancoDados, async function (req, res) {
+router.put('/editar/:id', conectarBancoDados, async function (req, res) {
 try {
-// #swagger.tags = ['Tarefa']
+// #swagger.tags = ['Livro']
 // #swagger.description = "Editar o arquivo selecionado."
 let idTarefa = req.params.id;
 let { posicao, titulo, descricao, status, dataEntrega } = req.body;
@@ -55,9 +52,9 @@ return tratarErrosEsperados(res, error);
 });
 
 
-router.get('/obter/usuario', authUser, conectarBancoDados, async function (req, res) {
+router.get('/obter/usuario', conectarBancoDados, async function (req, res) {
 try {
-// #swagger.tags = ['Tarefa']
+// #swagger.tags = ['Livro']
 // #swagger.description = "Endpoint para obter todas tarefas do usuario logado."
 const usuarioLogado = req.usuarioJwt.id;
 const respostaBD = await EsquemaTarefa.find({ usuarioCriador: usuarioLogado }).populate('usuarioCriador');
@@ -74,9 +71,9 @@ return tratarErrosEsperados(res, error);
 });
 
 
-router.delete('/deletar/:id', authUser, conectarBancoDados, async function (req, res) {
+router.delete('/deletar/:id', conectarBancoDados, async function (req, res) {
 try {
-// #swagger.tags = ['Tarefa']
+// #swagger.tags = ['Livro']
 // #swagger.description = "Deleção do arquivo selecionado."
 const idTarefa = req.params.id;
 const usuarioLogado = req.usuarioJwt.id;
