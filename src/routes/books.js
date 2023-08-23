@@ -9,12 +9,11 @@ try {
 // #swagger.tags = ['Livros']
 // #swagger.description = "Criar um novo arquivo de livros conforme solicitado no Desafio."
 let { titulo, paginas, isbn, editora } = req.body;
-const usuarioCriador = req.usuarioJwt.id;
 const respostaBD = await schemeBook.create({ titulo, paginas, isbn, editora });
 
 res.status(200).json({
     status: "OK",
-    statusMensagem: "Livro criada com sucesso.",
+    statusMensagem: "Livro criado com sucesso.",
     resposta: respostaBD
 })
 
@@ -29,21 +28,20 @@ try {
 // #swagger.description = "Editar o arquivo selecionado."
 let idBook = req.params.id;
 let { titulo, paginas, isbn, editora } = req.body;
-const usuarioLogado = req.usuarioJwt.id;
 
-const checkTarefa = await schemeBook.findOne({ _id: idBook, usuarioCriador: usuarioLogado });
+const checkTarefa = await schemeBook.findOne({ _id: idBook });
 if (!checkTarefa) {
-    throw new Error("Tarefa não encontrada ou pertence a outro usuário");
+    throw new Error("Livro não encontrada ou pertence a outro usuário");
 }
 
 const tarefaAtualizada = await schemeBook.updateOne({ _id: idBook }, { titulo, paginas, isbn, editora });
 if (tarefaAtualizada?.modifiedCount > 0) {
-    const dadosTarefa = await schemeBook.findOne({ _id: idBook });
+    const infoBooks = await schemeBook.findOne({ _id: idBook });
 
     res.status(200).json({
     status: "OK",
-    statusMensagem: "Tarefa atualizada com sucesso.",
-    resposta: dadosTarefa
+    statusMensagem: "Livro atualizado com sucesso.",
+    resposta: infoBooks
     })
 }
 } catch (error) {
@@ -76,17 +74,16 @@ try {
 // #swagger.tags = ['Livros']
 // #swagger.description = "Deleção do arquivo selecionado."
 const idBook = req.params.id;
-const usuarioLogado = req.usuarioJwt.id;
 
-const checkTarefa = await schemeBook.findOne({ _id: idBook, usuarioCriador: usuarioLogado });
+const checkTarefa = await schemeBook.findOne({ _id: idBook });
 if (!checkTarefa) {
-    throw new Error("Tarefa não encontrada ou pertence a outro usuário");
+    throw new Error("Livro não encontrado ou pertence a outro usuário");
 }
 
 const respostaBD = await schemeBook.deleteOne({ _id: idBook });
 res.status(200).json({
     status: "OK",
-    statusMensagem: "Tarefa deletada com sucesso.",
+    statusMensagem: "Livro deletada com sucesso.",
     resposta: respostaBD
 })
 
