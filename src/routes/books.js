@@ -8,9 +8,9 @@ router.post('/criar', conectarBancoDados, async function (req, res) {
 try {
 // #swagger.tags = ['Livros']
 // #swagger.description = "Criar um novo arquivo de livros conforme solicitado no Desafio."
-let { posicao, titulo, descricao, status, dataEntrega } = req.body;
+let { titulo, paginas, isbn, editora } = req.body;
 const usuarioCriador = req.usuarioJwt.id;
-const respostaBD = await schemeBook.create({ posicao, titulo, descricao, status, dataEntrega, usuarioCriador });
+const respostaBD = await schemeBook.create({ titulo, paginas, isbn, editora });
 
 res.status(200).json({
     status: "OK",
@@ -27,18 +27,18 @@ router.put('/editar/:id', conectarBancoDados, async function (req, res) {
 try {
 // #swagger.tags = ['Livros']
 // #swagger.description = "Editar o arquivo selecionado."
-let idTarefa = req.params.id;
-let { posicao, titulo, descricao, status, dataEntrega } = req.body;
+let idBook = req.params.id;
+let { titulo, paginas, isbn, editora } = req.body;
 const usuarioLogado = req.usuarioJwt.id;
 
-const checkTarefa = await schemeBook.findOne({ _id: idTarefa, usuarioCriador: usuarioLogado });
+const checkTarefa = await schemeBook.findOne({ _id: idBook, usuarioCriador: usuarioLogado });
 if (!checkTarefa) {
     throw new Error("Tarefa não encontrada ou pertence a outro usuário");
 }
 
-const tarefaAtualizada = await schemeBook.updateOne({ _id: idTarefa }, { posicao, titulo, descricao, status, dataEntrega });
+const tarefaAtualizada = await schemeBook.updateOne({ _id: idBook }, { titulo, paginas, isbn, editora });
 if (tarefaAtualizada?.modifiedCount > 0) {
-    const dadosTarefa = await schemeBook.findOne({ _id: idTarefa });
+    const dadosTarefa = await schemeBook.findOne({ _id: idBook });
 
     res.status(200).json({
     status: "OK",
@@ -75,15 +75,15 @@ router.delete('/deletar/:id', conectarBancoDados, async function (req, res) {
 try {
 // #swagger.tags = ['Livros']
 // #swagger.description = "Deleção do arquivo selecionado."
-const idTarefa = req.params.id;
+const idBook = req.params.id;
 const usuarioLogado = req.usuarioJwt.id;
 
-const checkTarefa = await schemeBook.findOne({ _id: idTarefa, usuarioCriador: usuarioLogado });
+const checkTarefa = await schemeBook.findOne({ _id: idBook, usuarioCriador: usuarioLogado });
 if (!checkTarefa) {
     throw new Error("Tarefa não encontrada ou pertence a outro usuário");
 }
 
-const respostaBD = await schemeBook.deleteOne({ _id: idTarefa });
+const respostaBD = await schemeBook.deleteOne({ _id: idBook });
 res.status(200).json({
     status: "OK",
     statusMensagem: "Tarefa deletada com sucesso.",
