@@ -2,19 +2,19 @@ const mongoose = require('mongoose');
 
 const scheme = new mongoose.Schema(
     {
-        Titulo: {
+        titulo: {
+        type: String,
+        required: 'é obrigatório!',
+        },
+        num_paginas: {
         type: Number,
         required: 'é obrigatório!',
         },
-        Paginas: {
-        type: String,
-        required: 'é obrigatório!',
-        },
-        ISBN: {
+        isnb: {
         type: String,
         default: '',
         },
-        Editora: {
+        editora: {
         type: String,
         required: 'é obrigatório!',
         },
