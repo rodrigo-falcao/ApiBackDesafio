@@ -8,7 +8,7 @@ router.post('/criar', conectarBancoDados, async function (req, res) {
 try {
 // #swagger.tags = ['Livros']
 // #swagger.description = "Criar um novo arquivo de livros conforme solicitado no Desafio."
-let {  } = req.body;
+let { titulo, paginas, isbn, editora } = req.body;
 const respostaBD = await schemeBook.create({ titulo, paginas, isbn, editora });
 
 res.status(200).json({
