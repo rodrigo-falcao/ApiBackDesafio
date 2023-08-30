@@ -12,7 +12,7 @@ if (String(err).includes(`ValidationError:`)) {
     });
 }
 
-//   Pode ser um erro definito manualmente por min
+//   Pode ser um erro definito manualmente por mim
 if (String(err).includes(`Error:`)) {
     return res.status(400).json({
     status: "Erro",
