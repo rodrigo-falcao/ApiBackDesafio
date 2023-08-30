@@ -54,13 +54,13 @@ return tratarErrosEsperados(res, error);
 router.get('/obter/livro', conectarBancoDados, async function (req, res) {
 try {
     // #swagger.tags = ['Livros']
-    // #swagger.description = "Endpoint para obter todas tarefas do usuario logado."
-    const usuarioLogado = req.usuarioJwt.id;
-    const respostaBD = await schemeBook.find({ usuarioCriador: usuarioLogado });
+    // #swagger.description = "Endpoint para obter todos os livros do banco de dados."
+    
+    const respostaBD = await schemeBook.find();
 
     res.status(200).json({
         status: "OK",
-        statusMensagem: "Tarefas listadas na respota com sucesso.",
+        statusMensagem: "Livros listadas com sucesso.",
         resposta: respostaBD
 })
 
@@ -69,6 +69,28 @@ try {
     }
 });
 
+router.get('/obter/livro/:id', conectarBancoDados, async function (req, res) {
+    try {
+        // #swagger.tags = ['Livros']
+        // #swagger.description = "Endpoint para obter o livro a partir de uma id do banco de dados."
+
+        let idBook = req.params.id;
+
+        const checkBook = await schemeBook.findOne({ _id: idBook })
+        if (!checkBook) throw new Error(`Livro não encontrado.`)
+        
+        const respostaBD = await schemeBook.find({ _id: idBook });
+    
+        res.status(200).json({
+            status: "OK",
+            statusMensagem: "Tarefas listadas na respota com sucesso.",
+            resposta: respostaBD
+    })
+    
+    } catch (error) {
+        return tratarErrosEsperados(res, error);
+        }
+});
 
 router.delete('/deletar/:id', conectarBancoDados, async function (req, res) {
 try {
