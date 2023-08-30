@@ -29,13 +29,14 @@ try {
 let idBook = req.params.id;
 let { titulo, num_paginas, isnb, editora } = req.body;
 
-const checkTarefa = await schemeBook.findOne({ _id: idBook });
-if (!checkTarefa) {
+const checkLivro = await schemeBook.findOne({ _id: idBook });
+if (!checkLivro) {
     throw new Error("Livro não encontrada ou pertence a outro usuário");
 }
 
-const tarefaAtualizada = await schemeBook.updateOne({ _id: idBook }, { titulo, num_paginas, isnb, editora });
-if (tarefaAtualizada?.modifiedCount > 0) {
+const livroAtualizado = await schemeBook.updateOne({ _id: idBook }, { titulo, num_paginas, isnb, editora });
+
+if (livroAtualizado?.modifiedCount > 0) {
     const infoBooks = await schemeBook.findOne({ _id: idBook });
 
     res.status(200).json({
@@ -52,44 +53,46 @@ return tratarErrosEsperados(res, error);
 
 router.get('/obter/livro', conectarBancoDados, async function (req, res) {
 try {
-// #swagger.tags = ['Livros']
-// #swagger.description = "Endpoint para obter todas tarefas do usuario logado."
-const usuarioLogado = req.usuarioJwt.id;
-const respostaBD = await schemeBook.find({ usuarioCriador: usuarioLogado });
+    // #swagger.tags = ['Livros']
+    // #swagger.description = "Endpoint para obter todas tarefas do usuario logado."
+    const usuarioLogado = req.usuarioJwt.id;
+    const respostaBD = await schemeBook.find({ usuarioCriador: usuarioLogado });
 
-res.status(200).json({
-    status: "OK",
-    statusMensagem: "Tarefas listadas na respota com sucesso.",
-    resposta: respostaBD
+    res.status(200).json({
+        status: "OK",
+        statusMensagem: "Tarefas listadas na respota com sucesso.",
+        resposta: respostaBD
 })
 
 } catch (error) {
-return tratarErrosEsperados(res, error);
-}
+    return tratarErrosEsperados(res, error);
+    }
 });
 
 
 router.delete('/deletar/:id', conectarBancoDados, async function (req, res) {
 try {
-// #swagger.tags = ['Livros']
-// #swagger.description = "Deleção do arquivo selecionado."
-const idBook = req.params.id;
+    // #swagger.tags = ['Livros']
+    // #swagger.description = "Deleção do arquivo selecionado."
+    const idBook = req.params.id;
 
-const checkTarefa = await schemeBook.findOne({ _id: idBook });
-if (!checkTarefa) {
-    throw new Error("Livro não encontrado ou pertence a outro usuário");
-}
+    const checkLivro = await schemeBook.findOne({ _id: idBook });
 
-const respostaBD = await schemeBook.deleteOne({ _id: idBook });
-res.status(200).json({
-    status: "OK",
-    statusMensagem: "Livro deletada com sucesso.",
-    resposta: respostaBD
-})
+    if (!checkLivro) {
+        throw new Error("Livro não encontrado ou pertence a outro usuário");
+    }
 
-} catch (error) {
-return tratarErrosEsperados(res, error);
-}
+    const respostaBD = await schemeBook.deleteOne({ _id: idBook });
+
+    res.status(200).json({
+        status: "OK",
+        statusMensagem: "Livro deletada com sucesso.",
+        resposta: respostaBD
+    })
+
+    } catch (error) {
+        return tratarErrosEsperados(res, error);
+    }
 });
 
 module.exports = router;
