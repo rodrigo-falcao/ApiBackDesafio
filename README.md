@@ -3,9 +3,8 @@ Link do servidor de produção: https://api-back-desafio.vercel.app/doc/  <br>
 Feito para avaliação, tendo todas as funções do CRUD, além de fazer a leitura do livro também por ID.
 
 <p align="center">
-  <img a="!https://github.com/rodrigo-falcao/ApiBackDesafio/assets/125101340/98804575-3ef6-41aa-a453-ca5d863fe736" src="" alt="Imagem projeto" style="width: 650px;">
+  <img src="https://github.com/rodrigo-falcao/ApiBackDesafio/assets/125101340/98804575-3ef6-41aa-a453-ca5d863fe736" alt="Imagem projeto" style="width: 650px;">
 </p>
-
 
 ## Scripts Disponíveis
 No diretório do projeto, você pode executar os seguintes scripts:
@@ -35,5 +34,17 @@ A API possui os seguintes endpoints:
 - GET /livros/obter/livro/:id   <b>Obtém um livro por ID.</b>
 - DELETE /livros/deletar/:id   <b>Deleta um livro por ID.</b>
 
-Este projeto foi desenvolvido como parte do desafio e é fornecido como exemplo. <br>
-Sinta-se à vontade para personalizar e melhorar de acordo com suas necessidades.
+## Tecnologias Utilizadas
+- Node.js: Plataforma de execução de código JavaScript do lado do servidor.
+- Express.js: Framework web para Node.js, utilizado para criar a estrutura da API.
+- MongoDB: Banco de dados NoSQL utilizado para armazenar os dados da aplicação.
+- Mongoose: Biblioteca ODM (Object Data Modeling) para MongoDB, utilizada para modelar os dados e interagir com o banco de dados.
+- dotenv: Biblioteca para carregar variáveis de ambiente a partir de um arquivo .env.
+- swagger-autogen: Biblioteca para a geração automática da documentação do Swagger.
+- swagger-ui-express: Biblioteca para a visualização da documentação do Swagger na forma de uma interface interativa.
+- nodemon: Utilitário que monitora as mudanças nos arquivos e reinicia automaticamente o servidor.
+- debug: Biblioteca para a adição de mensagens de debug no código.
+- validator: Biblioteca para a validação de dados.
+
+Este projeto foi desenvolvido como parte do desafio para a escola DNC. <br>
+
