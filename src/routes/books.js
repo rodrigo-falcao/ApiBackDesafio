@@ -8,8 +8,8 @@ router.post('/criar', conectarBancoDados, async function (req, res) {
 try {
 // #swagger.tags = ['Livros']
 // #swagger.description = "Criar um novo arquivo de livros conforme solicitado no Desafio."
-let { titulo, paginas, isbn, editora } = req.body;
-const respostaBD = await schemeBook.create({ titulo, paginas, isbn, editora });
+let { titulo, num_paginas, isnb, editora } = req.body;
+const respostaBD = await schemeBook.create({ titulo, num_paginas, isnb, editora });
 
 res.status(200).json({
     status: "OK",
@@ -27,14 +27,14 @@ try {
 // #swagger.tags = ['Livros']
 // #swagger.description = "Editar o arquivo selecionado."
 let idBook = req.params.id;
-let { titulo, paginas, isbn, editora } = req.body;
+let { titulo, num_paginas, isnb, editora } = req.body;
 
 const checkTarefa = await schemeBook.findOne({ _id: idBook });
 if (!checkTarefa) {
     throw new Error("Livro não encontrada ou pertence a outro usuário");
 }
 
-const tarefaAtualizada = await schemeBook.updateOne({ _id: idBook }, { titulo, paginas, isbn, editora });
+const tarefaAtualizada = await schemeBook.updateOne({ _id: idBook }, { titulo, num_paginas, isnb, editora });
 if (tarefaAtualizada?.modifiedCount > 0) {
     const infoBooks = await schemeBook.findOne({ _id: idBook });
 
